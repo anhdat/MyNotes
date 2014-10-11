@@ -47,6 +47,48 @@ GUI or TUI doesn't matter anyway.
 
 ## 1. The Vim Way
 
+### Tip 1. Meet the Dot Command
+The dot command let us repeat the last change.
+**The change** 
+is the command x, dd, > for example
+or everytime we dip into Insert mode until we return to Normal mode.
+**-> The Dot command is a mini macro**
+
+### Tip 2. Don't Repeat yourself
+Combine a$ to A
+C = c$ '' Replace to the end of line
+s = cl '' Replace left character
+S = ^C '' Replace line
+I = ^i '' Insert at the begining of line
+A = $a '' Insert at the end of line
+o = A<CR> '' Insert a blank line after
+O = ko '' Insert a blank line before
+
+### Tip 3. Take One Step Back, Then Three Forward
+Try to find solution to utilize ; and . by using search and "change" notion.
+'f+' search for next appearance of '+'
+';' repeat that search
+
+### Tip 4. Act, Repeat, Reverse
+When we guide our solution to be repeatable in both motion and change, we should
+have a way to reverse when mistyping or error happens.
+Act               Repeat Reverse
+{edit}              .       u
+f{char}/t{char}     ;       ,
+F{char}/T{char}     ;       ,
+/pattern<CR>        n       N
+?pattern<CR>        n       N
+:s/target/replacement &     u
+qx{change}q         @x      u
+
+### Tip 5. Find and Replace by Hand
+we can use :substitute or by finding by hand using '/' comman and ' * ' then
+repeat it to move to place we want, then repeat the last change.
+
+### Tip 6. Meet the Dot formula
+After all above examples, we can see the stratery we're trying to get is:
+**The Ideal: One Keystroke to Move, One Keystroke to Execute** 
+
 # Part I - Modes
 ## 2. Normal Mode
 ## 3. Insert Mode
