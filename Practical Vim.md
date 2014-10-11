@@ -28,7 +28,22 @@ Vim is developed from classic Unix editors like *vi* and *ed*, these predate
 the mouse and point-and-click interface.
 
 ## Read the Forgotten Manual
-
+**Get to know Vim's Built-in Documentation**
+**Playing melodies**
+Using keyboard with Vim is much like playing on the piano keyboard.
+We can play one note.
+A sequence. Or a Chord.
+**Use Vim's Factory Settings**
+$ vim -u NONE -N
+"- NONE" means not to source vimrc
+"- N" means set nocompatible
+Specify vimrc file:
+$ vim -u code/essential.vim
+**On the Role of Vim Script**
+It's huge, so the book doesn't want to cover it all.
+**On Vim Versions**
+7.3
+GUI or TUI doesn't matter anyway.
 
 ## 1. The Vim Way
 
