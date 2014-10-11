@@ -82,15 +82,66 @@ F{char}/T{char}     ;       ,
 qx{change}q         @x      u
 
 ### Tip 5. Find and Replace by Hand
-we can use :substitute or by finding by hand using '/' comman and ' * ' then
+we can use :substitute or by finding by hand using '/' command and ' * ' then
 repeat it to move to place we want, then repeat the last change.
 
 ### Tip 6. Meet the Dot formula
-After all above examples, we can see the stratery we're trying to get is:
+After all above examples, we can see the strategy we're trying to get is:
 **The Ideal: One Keystroke to Move, One Keystroke to Execute** 
 
 # Part I - Modes
 ## 2. Normal Mode
+
+### Tip 7. Pause with Your Brush Off the Page.
+Ah, Normal mode makes sense now. This is the second time that I was converted by
+being introduced to a different perspective.
+The first time is when they say "Using Vim in Normal mode likes someone's
+holding a <C> key for you".
+Then this time, they say "Using Vim is just like a painter with his painting.
+Only half of the working time, he use the brush to 'change' the canvas. The
+other half he has to study the object, adjust the lightning, and mixes paint to
+the new hue".
+Yah. It explains a lot.
+
+### Tip 8. Chunk Your Undos.
+Utilize 'u' command to undo to work well with your flow of thought.
+If you've paused for long enough to ask the question, "Should I leave the Insert
+mode?" then do it. 
+For more hardcore, the author even tend to use <Esc>o than press <CR> when in
+insert mode.
+
+### Tip 9. Compose Repeatable Changes
+Make your changes combine to one action of change, then you can utilize the Dot
+command, far more than that, it has a better notion when try to repeat later or
+combine to a more complex sequence of actions.
+Practical action: delete a word 'daw'
+
+### Tip 10. Use Counts to Do Simple Arithmetic
+cW to change the whole word, means till the space parts us.
+<C-a> jump to the next or the current number, increase that number by 'count'.
+<C-x> same as <C-a> but decrease.
+
+### Tip 11. Don't Count If You Can Repeat
+The title is clear enough.
+
+### Tip 12. Combine and Conquer
+**Operator + Motion = Action**
+:h operator
+
+Trigger     Effect
+c           Change
+d           Delete
+y           Yank into register
+g~          Swap case
+gu          Lower case
+gU          Uppercase
+>           Shift right
+<           Shift left
+=           Autoindent
+!           Filter {motion} lines through an external program \\TODO: Khong hieu
+
+ 
+
 ## 3. Insert Mode
 ## 4. Visual Mode
 ## 5. Command-Line Mode
