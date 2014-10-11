@@ -1,7 +1,34 @@
 ## Acknowledgments
+No one does it alone. The author has a great support from friends, colleagues
+and two wonderful women.
+
 ## Foreword
+Practical Vim is presented under "tips" format. "Tips" help you solve things,
+but not make you feel like Vim master. Should see this book's approach as
+problem/solution.
+
 ## Read Me
+"...in the hands of an expert, Vim shreds text at the speed of thought..."
+Vim is available everywhere, from a remote server over SSH or local instance of
+GVim.
+Powerful tool.
+**How This Book is Structured**
+Is a recipe book. NOT to read from start to finish.
+Some tips are self contained, many are cross-referenced.
+Novice might prefer read the early tips of each chapter.
+Advanced reader might choose to focus on the later tips or move around the book
+as needed.
+**A Note on the Examples**
+In Vim, there's always more than one way to complete any given task.
+So try to find a resemblance of the solution in this book to our real life
+problems.
+**Learn to Touch Type, Then Learn Vim**
+If not the benefits of learning Vim wouldn't come fast.
+Vim is developed from classic Unix editors like *vi* and *ed*, these predate
+the mouse and point-and-click interface.
+
 ## Read the Forgotten Manual
+
 
 ## 1. The Vim Way
 
