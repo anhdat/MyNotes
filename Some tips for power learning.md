@@ -1,4 +1,5 @@
-Some tips for learning things:
+Some tips for power learning.md
+
 - Do it together.
 - Write it down.
 - Expose yourself to advanced topics.
