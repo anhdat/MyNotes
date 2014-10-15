@@ -1,8 +1,12 @@
-## Acknowledgments
+Practical Vim.md
+
+Changed.
+Changed again.
+
+## Foreword
 No one does it alone. The author has a great support from friends, colleagues
 and two wonderful women.
 
-## Foreword
 Practical Vim is presented under "tips" format. "Tips" help you solve things,
 but not make you feel like Vim master. Should see this book's approach as
 problem/solution.
@@ -72,7 +76,9 @@ Try to find solution to utilize ; and . by using search and "change" notion.
 ### Tip 4. Act, Repeat, Reverse
 When we guide our solution to be repeatable in both motion and change, we should
 have a way to reverse when mistyping or error happens.
-Act               Repeat Reverse
+
+Act | Repeat |Reverse
+
 {edit}              .       u
 f{char}/t{char}     ;       ,
 F{char}/T{char}     ;       ,
@@ -135,7 +141,7 @@ y           Yank into register
 g~          Swap case
 gu          Lower case
 gU          Uppercase
->           Shift right
+\>           Shift right
 <           Shift left
 =           Autoindent
 !           Filter {motion} lines through an external program \\TODO: Khong hieu
@@ -143,6 +149,14 @@ gU          Uppercase
  
 
 ## 3. Insert Mode
+
+### Tip 13. Make Corrections Instantly from Insert Mode
+### Tip 14. Get Back to Normal Mode
+### Tip 15. Paste from a Register Without Leaving Insert Mode
+### Tip 17. Insert Unusual Characters by Character Code.
+### Tip 18. Insert Unusual Character by Digraph
+### Tip 19. Overwrite Existing Text with Replace Mode
+
 ## 4. Visual Mode
 ## 5. Command-Line Mode
 
