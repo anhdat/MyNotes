@@ -1,4 +1,4 @@
-Best practices Running an iOS Open Sourced Project on Git Hub
+Best Practices Running an iOS Open Source Project on Github.md
 
 1. Well organized structure
 
