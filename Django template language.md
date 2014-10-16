@@ -11,7 +11,7 @@ Template:
   - do something
   Example:
 
-    {% if is_logged_in %} Thanks for logging in! {% else %} Please log in. {%
+      {% if is_logged_in %} Thanks for logging in! {% else %} Please log in. {%
 endif %>
 
 **variable**
@@ -20,7 +20,7 @@ endif %>
 
   Example:
 
-    My first name is {{ first_name }}
+      My first name is {{ first_name }}
 
 ## Using the template system
 
