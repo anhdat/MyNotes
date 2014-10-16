@@ -7,15 +7,15 @@ Template:
   - Contains *block tag* or *variable*.
 
 **block tag**
-  - surrounded by “{%” and “%}”
+  - surrounded by `{%` and `%}`
   - do something
   Example:
 
       {% if is_logged_in %} Thanks for logging in! {% else %} Please log in. {%
-endif %>
+      endif %>
 
 **variable**
-  - surrounded by “{{” and “}}”
+  - surrounded by `{{` and `}}`
   - output a value
 
   Example:
@@ -27,7 +27,7 @@ endif %>
 ### Class **Template**
 Two steps:
   - Compile: raw template code -> Template object
-  - Render: call render() of a Template object with a context.
+  - Render: call `render()` of a *Template* object with a context.
 
 **Compiling a string**
 
