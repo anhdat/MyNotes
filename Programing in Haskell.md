@@ -156,6 +156,7 @@ multiple values using lists or tuples.
 - More flexible, can be applied to a part of a list.
 - Convention 1: `->` is assumed to associate to the right.
 - Convention 2: parentheses is assumed to associate to the left.
+
 ### 3.7. Polymorphic types
 
 - Type variable enables function to apply with any type.
@@ -184,10 +185,65 @@ Example:
 
 ### 3.9. Basic classes
 
+- _Class_ is a collection of types, that support certain overloaded operations
+  called _methods_.
+- This notion is far different what class is in OOP. So, instead of class is
+  definition of related characteristics as nouns, in FP, class is a collection
+of methods as verbs.
 
+#### _Eq_ - equality types.
+
+- Types whose values can be compared for equality and inequality.
+- All basic types are instances of the Eq class, as are is list and tuple.
+
+#### _Ord_ - ordered types.
+
+- Values are linearly ordered.
+- Six methods: (<), (<=), (>), (>=), min max.
+
+#### _Show_ - show-able types.
+
+- Types whose values can be converted in to string:
+    show :: a -> String
+
+#### _Read_ - readable types.
+
+- Convert from string to its instances.
+    read :: String -> a
+
+#### _Num_ - numeric types.
+#### _Integral_ - integral types.
+
+    div :: a -> a -> a
+    mod :: a -> a -> a
+
+#### _Fractional_ - fractional types
+
+    (/) :: a -> a -> a
+    recip :: a -> a
 
 ### 3.10. Chapter remarks
 ### 3.11. Exercises
+
+1.
+    [’a’,’b’,’c’] :: [Char]
+    (’a’, ’b’, ’c’) :: (Char, Char, Char)
+    [ (False , ’O’), (True , ’1’) ] :: [(Bool, Char)]
+    ([False,True],[’0’,’1’]) :: ([Bool], [Char])
+    [ tail , init , reverse ] :: [[a] -> [a]]
+
+2.
+    second xs = head (tail xs) :: [a] -> a
+    swap (x, y) = (y, x) :: (a, b) -> (b, a)
+    pair x y = (x, y) :: x -> y -> (x, y)
+    double x = x * 2 :: Num a => a -> a
+    palindrome xs = reverse xs == xs :: [a] -> Bool
+    twice f x = f (f x) :: (t -> t) -> t -> t
+
+3.
+
+4.
+// TODO
 
 ## Chapter 4 - Defining functions
 
