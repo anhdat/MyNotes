@@ -107,13 +107,85 @@ library called Prelude.hs, a library defines many familiar functions.
 - Type inference: a process to calculate type of every expression.
 
 ### 3.2. Basic types
+
+- Bool
+- Char
+- String
+- Int: fixed-precision integer, value ranges from -2^31 to 2^31 - 1. Has fixed
+  amount of computer memory.
+- Integer: arbitrary-precision integer. Compute slower via a medium.
+- Float: single-precision floating point numbers. Has a fixed amount of memory.
+
+_Floating point_ comes from the fact that the point is _float_ according how big
+or small the number is. E.g. `sqrt 2 = 1.41421` which has 5 digits after the
+point, whereas `sqrt 99999 = 316.226` has only 3 digits after the point.
+
 ### 3.3. List types
+
+- A _list_ is a sequence of _elements_ of the same type.
+- Length = 0 -> empty list
+- Length = 1 -> singleton list
+- Type of a list does not convey information about its length.
+- No limitation for type of elements in a list. List of lists is also possible.
+- No restriction for number of elements. Infinite length is also natural and
+  practical.
+
 ### 3.4. Tuple types
+
+- **Finite** sequence of _component_of possibly different types.
+- Enclosed by round parentheses and separated by commas.
+- The number of components in a tuple is called _arity_.
+- According to its arity, tuples can be called empty, pairs, triples.
+- There is no tuple with arity one, because of conflict with parentheses used
+  with order explicit.
+- The type of tuple does convey its arity.
+- There is no restriction on the type of components of a tuple.
+- Tuple must have finite arity -> can calculate its type.
+
 ### 3.5. Function types
+
+- Function is **a mapping** from _arguments_ of one type to _results_ of another
+  type.
+- There is no restriction on type of arguments. Therefore single argument and
+  result can also handle multiple arguments and results as we can package
+multiple values using lists or tuples.
+
 ### 3.6. Curried functions
-### 3.7. Overloaded types
+
+- Functions that take arguments one at a time are called _curried_.
+- More flexible, can be applied to a part of a list.
+- Convention 1: `->` is assumed to associate to the right.
+- Convention 2: parentheses is assumed to associate to the left.
+### 3.7. Polymorphic types
+
+- Type variable enables function to apply with any type.
+- Type variable must begin with lower case letter.
+
+Example:
+    fst :: (a, b) -> a
+    head :: [a] -> a
+    take :: Int -> [a] -> [a]
+    zip :: [a] -> [b] -> [(a, b)]
+    id :: a -> a
+
 ### 3.8. Overloaded types
+
+- _Class constraint_ is denoted as _C a_, where _C_ is the name of a class and
+  _a_ is a type variable.
+
+- Parentheses around an operator converts it into a curried function.
+- A type that contains one or more class constraints is called overloaded.
+
+Example:
+    (+) :: Num a => a -> a -> a
+    With any instance a of class Numeric, function + has type of a -> a -> a.
+    Num a => a -> a -> a is an overload type.
+    (+) is an oveloaded function.
+
 ### 3.9. Basic classes
+
+
+
 ### 3.10. Chapter remarks
 ### 3.11. Exercises
 
