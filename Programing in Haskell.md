@@ -226,6 +226,7 @@ of methods as verbs.
 ### 3.11. Exercises
 
 1.
+
     [’a’,’b’,’c’] :: [Char]
     (’a’, ’b’, ’c’) :: (Char, Char, Char)
     [ (False , ’O’), (True , ’1’) ] :: [(Bool, Char)]
@@ -233,6 +234,7 @@ of methods as verbs.
     [ tail , init , reverse ] :: [[a] -> [a]]
 
 2.
+
     second xs = head (tail xs) :: [a] -> a
     swap (x, y) = (y, x) :: (a, b) -> (b, a)
     pair x y = (x, y) :: x -> y -> (x, y)
@@ -241,6 +243,7 @@ of methods as verbs.
     twice f x = f (f x) :: (t -> t) -> t -> t
 
 3.
+
 
 4.
 // TODO
