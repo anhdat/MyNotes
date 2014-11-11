@@ -163,6 +163,7 @@ multiple values using lists or tuples.
 - Type variable must begin with lower case letter.
 
 Example:
+
     fst :: (a, b) -> a
     head :: [a] -> a
     take :: Int -> [a] -> [a]
@@ -251,13 +252,168 @@ of methods as verbs.
 ## Chapter 4 - Defining functions
 
 ### 4.1. New from old
+
+- New functions defined by combining old ones.
+
 ### 4.2. Conditional expressions
+
+- `if then else`
+- `else` is mandatory.
+
 ### 4.3. Guarded equations
+
+- The symbol `|` is read as "such that".
+- Guarded equations is clearly an excellent way to define conditional
+  statements. Like a `switch` like statement for conditions.
+
 ### 4.4. Pattern matching
+
+- Pattern matching is another attempt to make Haskell more clear and simple in
+  term of function definition, which is, happens a lot.
+- By defining one case after another, we can separate function definition in
+  smaller case. And by using wild card pattern, this can reduce the amount of
+patterns need to be defined.
+- Wildcards can be used with lazy valuation. If the all the first argument is
+  false cases, the wildcards would then not evaluate the second.
+- One name is used for only one argument in a single equation. Can't repeat
+  argument.
+
+#### Tuple patterns
+
+- Match arity.
+- Then match components in order.
+
+Example:
+    fst :: (a, b) -> a
+    fst (x, _) = x
+
+#### List patterns
+
+- _cons_ operator is used to construct list. Therefore, can be used to construct
+  list patterns.
+- List is not primitive type. Should be seen as a chain of _cons_ operators: [1,
+  2, 3, 4] = 1 : 2 : 3 : []
+- Match length.
+- Then match elements in order.
+
+Example:
+    null :: [a] -> Bool
+    null [] = True
+    null (_ : _) = False
+
+    head :: [a] -> a
+    head (x : _) = x
+
+    tail :: [a] -> [a]
+    tail (_ : xs) = xs
+
+#### Integer patterns
+
+Example:
+    pred :: Int -> Int
+    pred 0 = 0
+    pred (n + 1) = n
+
 ### 4.5. Lambda expressions
+
+- Lambda expressions are nameless functions.
+
+Example:
+    > (\x -> x + x) 2
+    4
+
+- Use to formalize curried functions:
+    add x y = x + y
+    add x y = \x -> (\y -> x + y)
+
+- Use to define a function that only use once.
+    odds n = map (\x -> x * 2 + 1) [0..n-1]
+
 ### 4.6. Sections
+
+- Enclosed operator in parentheses make them curried function.
+- Can also include an argument.
+- 2 ways above create _sections_
+
+Applications of section:
+
+- Construct some simples functions:
+    (+) addition
+    (1+) successor
+    (1/) reciprocation
+    (*2) double
+    (/2) halve
+
+- Necessary when finding the type of operators. Because operators itself is not
+  a valid expression. Must be enclosed in parentheses.
+
+- Necessary when passing operator as argument.
+    and :: [Bool] -> Bool
+    and = foldr (^) True
+
 ### 4.7. Chapter remarks
 ### 4.8. Exercises
+
+1.
+
+    halve xs = take middle xs : drop middle xs : []
+                where middle = length xs `div` 2
+
+2.
+
+  1. A conditional expression
+
+    safetail1 xs = if length xs == 0 then xs else tail xs
+
+  2. Guarded equations
+
+    safetail2 xs | length xs == 0 = xs
+                 | otherwise = tail xs
+
+  3. Pattern matching
+
+    safetail3 [] = []
+    safetail3 xs = tail xs
+
+3.
+
+  Redefine || (Or) operation using patterns matching.
+
+  1.
+
+    True || True = True
+    True || False = True
+    False || True = True
+    False || False = False
+
+  2.
+
+    False || False = False
+    _ || _ = True
+
+  3.
+
+    False || b = b
+    True || _ = True
+
+  4.
+
+    b || c | b == b = b
+           | otherwise = True
+
+4.
+
+    (&&) b c = if c == True then
+                if b == True then True else False
+              else False
+
+5.
+
+    (&&) a b = if a == True then b else False
+
+6.
+
+    mult x y z = \x -> \y -> \z -> x * y * z
 
 ## Chapter 5 - List comprehensions
 ## Chapter 6 - Recursive functions
