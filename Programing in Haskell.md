@@ -413,7 +413,7 @@ Applications of section:
 
 6.
 
-    mult x y z = \x -> \y -> \z -> x * y * z
+    mult = \x -> \y -> \z -> x * y * z
 
 ## Chapter 5 - List comprehensions
 ## Chapter 6 - Recursive functions
