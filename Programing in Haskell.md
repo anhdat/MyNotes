@@ -416,6 +416,103 @@ Applications of section:
     mult = \x -> \y -> \z -> x * y * z
 
 ## Chapter 5 - List comprehensions
+
+### 5.1. Generator
+
+- _Comprehension_: construct new sets from existing sets.
+
+For example:
+
+The comprehension {x^2 | x <- {1..5}} produces the set {1, 4, 9, 16, 25}.
+
+In Haskell:
+    > [x ^ 2 | x <- [1..5]]
+    [1, 4, 9, 16, 25]
+
+- `|` is read as _such that_
+- `<-` is read as _is drawn from_
+- The expression `x <- [1..5]` is called a _generator_
+- A list comprehension can have **more** than one generator, separated by
+  commas.
+
+Example:
+    > [(x, y) | x <- [1..3], y <- [4, 5]]
+    [(1,4),(1,5),(2,4),(2,5),(3,4),(3,5)]
+    > [(x, y) | y <- [4..5], x <- [1..3]]
+    [(1,4),(2,4),(3,4),(1,5),(2,5),(3,5)]
+
+- The generators is like the nested loops, which the later is more deeply
+  nested.
+- Later generators can also depend on values of valuables from earlier
+  generators.
+
+For example:
+    >[(x, y) | x <- [1..3], y <- [1..x]]
+    [(1,1),(2,1),(2,2),(3,1),(3,2),(3,3)]
+
+- Use wildcard `_` to discard elements from list.
+
+For example:
+    >length xs = sum[1 | _ <- xs]
+
+`_ <- xs` can be seen as the counter.
+
+### 5.2. Guards
+
+- List comprehensions can use logical expressions called _guards_ to filter the
+  values produced by earlier generators. If the guard is True then the current
+values are retained, else False then discarded.
+
+For example:
+    [x | x <- [1..10], even x]
+    [2,4,6,8,10]
+
+### 5.3. The _zip_ function
+
+- _zip_: pairing successive elements from two existing list until either or both
+  are exhausted.
+
+For example:
+    Prelude> zip ['a', 'b', 'c'] [1..3]
+    [('a',1),('b',2),('c',3)]
+    Prelude> zip ['a', 'b', 'c'] [1..4]
+    [('a',1),('b',2),('c',3)]
+
+_pairs_
+    pairs :: [a] -> [(a, a)]
+    pairs = zip xs (tail xs)
+
+    Prelude> let pairs xs = zip xs (tail xs)
+    Prelude> :t pairs
+    pairs :: [b] -> [(b, b)]
+    Prelude> pairs [1, 2, 3, 4]
+    [(1,2),(2,3),(3,4)]
+
+_sorted_
+    sorted :: Ord a => [a] -> Bool
+    sorted xs = and[x <= y | (x, y) <- pairs xs]
+
+- To check an array _sorted_ or not, we compare each adjacent elements from
+  list. As we can see from this example, we use generator to create a set of
+values, then filter by guards, and collect by the expression on left of `|`.
+This creates a set. In the _sorted_ example, we can operate on the result set
+with operator `and` to get the final result.
+
+_positions_
+    Prelude> let positions x xs = [i | (x', i) <- zip xs [0..n], x'== x] where n = length xs - 1
+    Prelude> :t positions
+    positions :: Eq a => a -> [a] -> [Int]
+    Prelude> positions True [True, False, False, True, True]
+    [0,3,4]
+
+### 5.4. String comprehensions
+
+- String is a list of char. So all the functions on list can be with strings,
+  include list comprehensions.
+
+### 5.5. The Caesar cipher
+### 5.6. Chapter remarks
+### 5.7. Exercises
 ## Chapter 6 - Recursive functions
 ## Chapter 7 - Higher-order functions
 ## Chapter 8 - Functional parsers
