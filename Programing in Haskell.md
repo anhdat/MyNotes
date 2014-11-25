@@ -513,6 +513,78 @@ _positions_
 ### 5.5. The Caesar cipher
 ### 5.6. Chapter remarks
 ### 5.7. Exercises
+
+    {-|
+      Exercise 5.6.1
+      Using a list comprehension, give an expression that calculates the sum 1^2 +
+      2^2 + . . . 100^2 of the first one hundred integer squares.
+    -}
+    ex1 = sum[x ^ 2 | x <- [1..100]]
+    
+    {-|
+     - In a similar way to the function length, show how the library function
+     - replicate :: Int → a → [ a ] that produces a list of identical elements can
+     - be defined using a list comprehension. For example:
+     - > replicate 3 True [True, True, True ]
+     -}
+    replicate' a b = [b | _ <- [1..a]]
+    
+    {-|
+     - A triple (x, y, z) of positive integers is pythagorean if x2 + y2 = z2. Using
+     - a list comprehension, define a function pyths :: Int → [ (Int , Int , Int ) ]
+     - that returns the list of all pythagorean triples whose components are at most
+     - a given limit. For example:
+     - > pyths 10
+     - [(3, 4, 5), (4, 3, 5), (6, 8, 10), (8, 6, 10)]
+     -}
+
+    pyths n = [(a, b, c) | a <- [1..n], b <- [1..n], c <- [1..n], a ^ 2 + b ^ 2 == c ^ 2]
+
+    {-|
+     - A positive integer is perfect if it equals the sum of its factors, excluding
+     - the number itself. Using a list comprehension and the function factors,
+     - define a function perfects :: Int → [ Int ] that returns the list of all
+     - perfect numbers up to a given limit. For example:
+     - > perfects 500
+     - [6, 28, 496]
+     -}
+
+    factors a = [x | x <- [1..a], a `mod` x == 0]
+    isPerfect a = sum (tail (reverse (factors a))) == a
+    perfects n = [x | x <- [1..n], isPerfect x]
+
+    {-|
+     - Show how the single comprehension [(x,y) | x ← [1,2,3],y ← [4,5,6]] with two
+     - generators can be re-expressed using two comprehen- sions with single
+     - generators. Hint: make use of the library function concat and nest one
+     - comprehension within the other.
+     -}
+
+    --ex51 = concat[(x, [y | y <- [4, 5, 6]]) | x <- [1, 2, 3]]
+
+    {-|
+     - 6. Redefine the function positions using the function find.
+     -}
+
+    find k t = [v | (k', v) <- t, k == k']
+    generateTuple xs = zip xs [0..n]
+                       where n = length xs - 1
+    positions x xs = find x (generateTuple xs)
+
+    {-|
+     - 7. The scalar product of two lists of integers xs and ys of length n is given by
+     - the sum of the products of corresponding integers:
+     - 􏰀n−1
+     - (xsi ∗ysi) i=0
+     - In a similar manner to the function chisqr , show how a list comprehension
+     - can be used to define a function scalarproduct :: [ Int ] → [ Int ] → Int
+     - that returns the scalar product of two lists. For example:
+     - > scalarproduct [1, 2, 3] [4, 5, 6]
+     - 32
+     -}
+
+    scalarproduct xs ys = sum[x * y | (x, y) <- zip xs ys]
+
 ## Chapter 6 - Recursive functions
 ## Chapter 7 - Higher-order functions
 ## Chapter 8 - Functional parsers
