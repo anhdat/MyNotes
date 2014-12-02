@@ -520,7 +520,7 @@ _positions_
       2^2 + . . . 100^2 of the first one hundred integer squares.
     -}
     ex1 = sum[x ^ 2 | x <- [1..100]]
-    
+
     {-|
      - In a similar way to the function length, show how the library function
      - replicate :: Int → a → [ a ] that produces a list of identical elements can
@@ -528,7 +528,7 @@ _positions_
      - > replicate 3 True [True, True, True ]
      -}
     replicate' a b = [b | _ <- [1..a]]
-    
+
     {-|
      - A triple (x, y, z) of positive integers is pythagorean if x2 + y2 = z2. Using
      - a list comprehension, define a function pyths :: Int → [ (Int , Int , Int ) ]
@@ -586,6 +586,181 @@ _positions_
     scalarproduct xs ys = sum[x * y | (x, y) <- zip xs ys]
 
 ## Chapter 6 - Recursive functions
+
+- Recursion is the basic mechanism for looping in Haskell.
+
+### 6.1. Basic concepts
+
+- Factorial can be written in recursive form as:
+    factorial 0 = 1
+    factorial (n + 1) = (n + 1) * factorial n
+
+- The first line above is called _base case_.
+- The last line is called _recursive case_.
+- Some functions can be easily defined by using standard library functions, but
+  in many case, defining in recursion is very simple and natural. Thus, many of
+library functions in Haskell are defined in recursion. Moreover, it allows us to
+use some powerful techniques of induction. (will see later)
+
+### 6.2. Recursion on lists
+
+- Insertion sort:
+  - Empty list is already sorted.
+  - Non empty list is sorted by inserting its head into the list that results
+    from sorting its tail.
+
+### 6.3. Multiple arguments
+
+- _zip_
+    zip :: [a] -> [b] -> [(a, b)]
+    zip [] _ = []
+    zip _ [] = []
+    zip (x : xs) (y : ys) = (x, y) : zip xs ys
+
+- Note that there are two base cases for each argument.
+
+### 6.4. Multiple recursion
+
+- Functions can be applied more than once in its definition.
+- _quick sort_
+    - Empty list is already sorted.
+    - Non empty list can be sorted by placing its head between the two lists
+      that results from quick sort those elements that _smaller_ and _larger_
+than the head.
+
+### 6.5. Mutual recursion
+
+- This is really interesting. The definition of one can only be complete by one
+  another and vice versa. It creates the _mutual_ recursion on these two.
+
+For example:
+`
+even :: Int -> Bool
+even 0 = True
+even (n + 1) = odd n
+
+odd :: Int -> Bool
+odd 0 = False
+odd (n + 1) = even n
+
+`
+
+### 6.6. Advice on recursion
+
+#### product
+#### drop
+#### init
+
+### 6.7. Chapter remarks
+### 6.8. Exercises
+
+`
+{-|
+ - 1. Define the exponentiation operator ↑ for non-negative integers using the
+ - same pattern of recursion as the multiplication operator ∗, and show how 2 ↑
+ - 3 is evaluated using your definition.
+ -}
+
+exp' :: Int -> Int -> Int
+exp' 0 a = 0
+exp' a 0 = 1
+exp' a n = a * (exp' a (n - 1))
+
+{-|
+ - 2. Using the definitions given in this chapter, show how length [1,2,3], drop
+ - 3 [1, 2, 3, 4, 5], and init [1, 2, 3] are evaluated.
+ -}
+
+{-|
+ - 3. Without looking at the definitions from the standard prelude, define the
+ - following library functions using recursion.
+ - – Decide if all logical values in a list are True: and :: [Bool]→Bool
+ - – Concatenate a list of lists: concat :: [[a]]→[a]
+ - – Produce a list with n identical elements: replicate :: Int→a→[a]
+ - – Select the nth element of a list: (!!) :: [a]→Int→a
+ - – Decide if a value is an element of a list: elem :: Eqa⇒a→[a]→Bool
+ -}
+
+and' :: [Bool] -> Bool
+and' [] = True
+and' (x : xs)
+  | x = and' xs
+  | otherwise = False
+
+concat' :: [[a]] -> [a]
+concat' [] = []
+concat' (x : xs) = x ++ concat' xs
+
+replicate' :: Int -> a -> [a]
+replicate' 0 a = []
+replicate' n a = a : replicate (n - 1) a
+
+get' :: [a] -> Int -> a
+get' [] _ = error "Empty array"
+get' xs a
+  | length xs < a = error "out of bound"
+get' (x : xs) 0 = x
+get' (x : xs) n = get' xs (n - 1)
+
+elem' :: Eq a => a -> [a] -> Bool
+elem' _ [] = False
+elem' a (x : xs)
+  | x == a = True
+  | otherwise = elem' a xs
+
+{-|
+ - 4. Define a recursive function merge :: Ord a ⇒ [a] → [a] → [a] that merges
+ - two sorted lists to give a single sorted list. For example:
+ - > merge[2,5,6][1,3,4] [1,2,3,4,5,6]
+ - Note: your definition should not use other functions on sorted lists such as
+ - insert or isort, but should be defined using explicit recursion.
+ -}
+
+merge :: Ord a => [a] -> [a] -> [a]
+
+merge [] xs = xs
+merge xs [] = xs
+merge (x : xs) (y : ys)
+  | x <= y = merge xs (x : (y : ys))
+  | otherwise = y : (merge (x : xs) ys)
+
+{-|
+ - 5. Using merge, define a recursive function msort :: Ord a ⇒ [a ] → [a ] that
+ - implements merge sort, in which the empty list and singleton lists are
+ - already sorted, and any other list is sorted by merging together the two
+ - lists that result from sorting the two halves of the list separately.
+ - Hint: first define a function halve :: [a ] → [([a ], [a ])] that splits a
+ - list into two halves whose lengths differ by at most one.
+ -}
+
+halve :: [a] -> ([a], [a])
+halve xs = (take n xs, drop n xs)
+           where n = length xs `div` 2
+
+first :: (a, b) -> a
+first (a, b) = a
+
+second (a, b) = b
+
+msort :: Ord a => [a] -> [a]
+
+msort [] = []
+msort [a] = [a]
+msort xs = merge (msort firstHalf) (msort secondHalf)
+           where
+             firstHalf = first halves
+             secondHalf = second halves
+             halves = halve xs
+
+{-|
+ - 6. Using the five-step process, define the library functions that calculate
+ - the sum of a list of numbers, take a given number of elements from the start
+ - of a list, and select the last element of a non-empty list.
+ -}
+
+--what?
+`
+
 ## Chapter 7 - Higher-order functions
 ## Chapter 8 - Functional parsers
 ## Chapter 9 - Interactive programs
