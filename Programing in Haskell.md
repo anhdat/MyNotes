@@ -654,114 +654,317 @@ odd (n + 1) = even n
 ### 6.7. Chapter remarks
 ### 6.8. Exercises
 
-`
-{-|
- - 1. Define the exponentiation operator ↑ for non-negative integers using the
- - same pattern of recursion as the multiplication operator ∗, and show how 2 ↑
- - 3 is evaluated using your definition.
- -}
 
-exp' :: Int -> Int -> Int
-exp' 0 a = 0
-exp' a 0 = 1
-exp' a n = a * (exp' a (n - 1))
+    {-|
+     - 1. Define the exponentiation operator ↑ for non-negative integers using the
+     - same pattern of recursion as the multiplication operator ∗, and show how 2 ↑
+     - 3 is evaluated using your definition.
+     -}
 
-{-|
- - 2. Using the definitions given in this chapter, show how length [1,2,3], drop
- - 3 [1, 2, 3, 4, 5], and init [1, 2, 3] are evaluated.
- -}
+    exp' :: Int -> Int -> Int
+    exp' 0 a = 0
+    exp' a 0 = 1
+    exp' a n = a * (exp' a (n - 1))
 
-{-|
- - 3. Without looking at the definitions from the standard prelude, define the
- - following library functions using recursion.
- - – Decide if all logical values in a list are True: and :: [Bool]→Bool
- - – Concatenate a list of lists: concat :: [[a]]→[a]
- - – Produce a list with n identical elements: replicate :: Int→a→[a]
- - – Select the nth element of a list: (!!) :: [a]→Int→a
- - – Decide if a value is an element of a list: elem :: Eqa⇒a→[a]→Bool
- -}
+    {-|
+     - 2. Using the definitions given in this chapter, show how length [1,2,3], drop
+     - 3 [1, 2, 3, 4, 5], and init [1, 2, 3] are evaluated.
+     -}
 
-and' :: [Bool] -> Bool
-and' [] = True
-and' (x : xs)
-  | x = and' xs
-  | otherwise = False
+    {-|
+     - 3. Without looking at the definitions from the standard prelude, define the
+     - following library functions using recursion.
+     - – Decide if all logical values in a list are True: and :: [Bool]→Bool
+     - – Concatenate a list of lists: concat :: [[a]]→[a]
+     - – Produce a list with n identical elements: replicate :: Int→a→[a]
+     - – Select the nth element of a list: (!!) :: [a]→Int→a
+     - – Decide if a value is an element of a list: elem :: Eqa⇒a→[a]→Bool
+     -}
 
-concat' :: [[a]] -> [a]
-concat' [] = []
-concat' (x : xs) = x ++ concat' xs
+    and' :: [Bool] -> Bool
+    and' [] = True
+    and' (x : xs)
+      | x = and' xs
+      | otherwise = False
 
-replicate' :: Int -> a -> [a]
-replicate' 0 a = []
-replicate' n a = a : replicate (n - 1) a
+    concat' :: [[a]] -> [a]
+    concat' [] = []
+    concat' (x : xs) = x ++ concat' xs
 
-get' :: [a] -> Int -> a
-get' [] _ = error "Empty array"
-get' xs a
-  | length xs < a = error "out of bound"
-get' (x : xs) 0 = x
-get' (x : xs) n = get' xs (n - 1)
+    replicate' :: Int -> a -> [a]
+    replicate' 0 a = []
+    replicate' n a = a : replicate (n - 1) a
 
-elem' :: Eq a => a -> [a] -> Bool
-elem' _ [] = False
-elem' a (x : xs)
-  | x == a = True
-  | otherwise = elem' a xs
+    get' :: [a] -> Int -> a
+    get' [] _ = error "Empty array"
+    get' xs a
+      | length xs < a = error "out of bound"
+    get' (x : xs) 0 = x
+    get' (x : xs) n = get' xs (n - 1)
 
-{-|
- - 4. Define a recursive function merge :: Ord a ⇒ [a] → [a] → [a] that merges
- - two sorted lists to give a single sorted list. For example:
- - > merge[2,5,6][1,3,4] [1,2,3,4,5,6]
- - Note: your definition should not use other functions on sorted lists such as
- - insert or isort, but should be defined using explicit recursion.
- -}
+    elem' :: Eq a => a -> [a] -> Bool
+    elem' _ [] = False
+    elem' a (x : xs)
+      | x == a = True
+      | otherwise = elem' a xs
 
-merge :: Ord a => [a] -> [a] -> [a]
+    {-|
+     - 4. Define a recursive function merge :: Ord a ⇒ [a] → [a] → [a] that merges
+     - two sorted lists to give a single sorted list. For example:
+     - > merge[2,5,6][1,3,4] [1,2,3,4,5,6]
+     - Note: your definition should not use other functions on sorted lists such as
+     - insert or isort, but should be defined using explicit recursion.
+     -}
 
-merge [] xs = xs
-merge xs [] = xs
-merge (x : xs) (y : ys)
-  | x <= y = merge xs (x : (y : ys))
-  | otherwise = y : (merge (x : xs) ys)
+    merge :: Ord a => [a] -> [a] -> [a]
 
-{-|
- - 5. Using merge, define a recursive function msort :: Ord a ⇒ [a ] → [a ] that
- - implements merge sort, in which the empty list and singleton lists are
- - already sorted, and any other list is sorted by merging together the two
- - lists that result from sorting the two halves of the list separately.
- - Hint: first define a function halve :: [a ] → [([a ], [a ])] that splits a
- - list into two halves whose lengths differ by at most one.
- -}
+    merge [] xs = xs
+    merge xs [] = xs
+    merge (x : xs) (y : ys)
+      | x <= y = merge xs (x : (y : ys))
+      | otherwise = y : (merge (x : xs) ys)
 
-halve :: [a] -> ([a], [a])
-halve xs = (take n xs, drop n xs)
-           where n = length xs `div` 2
+    {-|
+     - 5. Using merge, define a recursive function msort :: Ord a ⇒ [a ] → [a ] that
+     - implements merge sort, in which the empty list and singleton lists are
+     - already sorted, and any other list is sorted by merging together the two
+     - lists that result from sorting the two halves of the list separately.
+     - Hint: first define a function halve :: [a ] → [([a ], [a ])] that splits a
+     - list into two halves whose lengths differ by at most one.
+     -}
 
-first :: (a, b) -> a
-first (a, b) = a
+    halve :: [a] -> ([a], [a])
+    halve xs = (take n xs, drop n xs)
+               where n = length xs `div` 2
 
-second (a, b) = b
+    first :: (a, b) -> a
+    first (a, b) = a
 
-msort :: Ord a => [a] -> [a]
+    second (a, b) = b
 
-msort [] = []
-msort [a] = [a]
-msort xs = merge (msort firstHalf) (msort secondHalf)
-           where
-             firstHalf = first halves
-             secondHalf = second halves
-             halves = halve xs
+    msort :: Ord a => [a] -> [a]
 
-{-|
- - 6. Using the five-step process, define the library functions that calculate
- - the sum of a list of numbers, take a given number of elements from the start
- - of a list, and select the last element of a non-empty list.
- -}
+    msort [] = []
+    msort [a] = [a]
+    msort xs = merge (msort firstHalf) (msort secondHalf)
+               where
+                 firstHalf = first halves
+                 secondHalf = second halves
+                 halves = halve xs
 
---what?
-`
+    {-|
+     - 6. Using the five-step process, define the library functions that calculate
+     - the sum of a list of numbers, take a given number of elements from the start
+     - of a list, and select the last element of a non-empty list.
+     -}
+
+    --what?
+
 
 ## Chapter 7 - Higher-order functions
+
+### 7.1. Basic concepts
+
+- Function that takes a function as an argument or returns a function as a
+  result is called higher-order.
+
+### 7.2. Processing lists
+
+- _map_
+  - _map_ is polymorphic, it can be applied to any type.
+  - Can applied to itself to process nested list. For example:
+      map (map (+1)) [[1, 2, 3], [4, 5]]
+- _filter_
+- _all_
+- _any_
+- _takeWhile_
+- _dropWhile_
+
+### 7.3. The _foldr_ function
+
+- Pattern:
+    f [] = v
+    f (x : xs) = x (+) f xs
+- Can think of foldr as:
+  - Replace each _cons_ operator of a list by function _f_
+  -  Replace empty list in the end by value _v_
+
+### 7.4. The _foldl_ function
+### 7.5. The composition operator
+
+- Composition is associative.
+
+### 7.6. String transmitter
+#### Binary numbers
+#### Base conversion
+#### Transmission
+### 7.7. Chapter remarks
+### 7.8. Exercises
+
+    {-|
+     - 1. Show how the list comprehension [ f x | x ← xs , p x ] can be re-expressed
+     - using the higher-order functions map and filter .
+     -}
+
+    ex11 f p x = map f (filter p x)
+    ex12 f p = map f . filter p
+
+
+    xs = [2, 1, 3, 5, 4]
+    test11 = ex11 (+1) even xs == [3, 5]
+    test12 = ex12 (+1) even xs == [3, 5]
+    test1 = test11 && test12
+
+    {-
+     - 2. Without looking at the definitions from the standard prelude, define the
+     - higher-order functions all, any, takeWhile, and dropWhile.
+     -}
+
+    all' :: (a -> Bool) -> [a] -> Bool
+    --all' p xs =  and (map p xs)
+    all' p xs =  and (map p xs)
+
+
+    any' :: (a -> Bool) -> [a] -> Bool
+    --any' p xs = or (map p xs)
+    --any' p = not . null . dropWhile(not . p)
+    --any' p xs = length (filter p xs) > 0
+    --any' p xs = not (all (\ x -> not (p x)) xs)
+    --any' p xs = foldr (\ x acc -> (p x) || acc) False xs
+    any' p xs = foldr (||) False (map p xs)
+
+    takeWhile' :: (a -> Bool) -> [a] -> [a]
+    {-
+    takeWhile' _ [] = []
+    takeWhile' p (x : xs)
+      | p x = x : takeWhile' p xs
+      | otherwise = []
+     -}
+    takeWhile' p = foldr (\ x acc -> if p x then x : acc else []) []
+
+
+    dropWhile' :: (a -> Bool) -> [a] -> [a]
+    {-
+    dropWhile' p = foldl add []
+      where add [] x = if p x then [] else [x]
+            add acc x = acc ++ [x]
+     -}
+
+    dropWhile' _ [] = []
+    dropWhile' p (x : xs)
+      | p x = dropWhile' p xs
+      | otherwise = x: xs
+    sample21 = [1, 3, 5, 2]
+    sample22 = [2, 4, 6]
+    sample23 = [3, 5]
+    p = even
+
+    test21 = all' p sample21 == False
+    test22 = all' p sample22 == True
+    test23 = all' p sample23 == False
+    test2a = test21 && test22 && test23
+
+    test24 = any' p sample21 == True
+    test25 = any' p sample22 == True
+    test26 = any' p sample23 == False
+    test2b = test24 && test25 && test26
+
+    test2 = test2a && test2b
+
+    {-
+     - 3. Redefine the functions map f and filter p using foldr .
+     -}
+
+    --map' f = foldr (\ x xs -> [f x] ++ xs) []
+    map' f = foldl (\ xs x -> xs ++ [f x]) []
+
+    filter' p = foldr (\ x xs -> if p x then x : xs else xs) []
+
+    operator3 = (+1)
+    test31 = map' operator3 xs == map operator3 xs
+
+    {-
+     - 4. Using foldl,define a function dec2int::[Int]→Int that converts a decimal
+     - number into an integer. For example:
+     - > dec2int [2,3,4,5]
+     - 2345
+     -}
+
+    dec2int :: [Int] -> Int
+    dec2int = foldl (\ x y -> y + x * 10) 0
+
+    {-
+     - 5. Explain why the following definition is invalid:
+     - sumsqreven = compose [sum,map (↑2),filter even]
+     -
+     - Khong biet lam roi :(
+     -}
+
+    compose :: [a -> a] -> (a -> a)
+    compose = foldr (.) id
+
+    sumsqreven = compose [map (^2), filter even, filter (\ x -> x `mod` 3 == 0)]
+
+    abc = sum . map (^2) . filter even
+    ys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+    {-
+     - 6. Without looking at the standard prelude, define the higher-order library
+     - function curry that converts a function on pairs into a curried function,
+     - and, conversely, the function uncurry that converts a curried function with
+     - two arguments into a function on pairs.
+     - Hint: first write down the types of the two functions.
+     -}
+
+    curry' :: ((a, b) -> c) -> a -> b -> c
+    curry' f = \ x y -> f (x, y)
+
+    uncurry' :: (a -> b -> c) -> ((a, b) -> c)
+    uncurry' f = \ (a, b) -> f a b
+
+    {-
+     - 7. A higher-order function unfold that encapsulates a simple pattern of
+     - recursion for producing a list can be defined as follows:
+     -
+     - unfold p h t x
+     -    |p x = []
+     -    |otherwise = h x :unfold p h t (t x)
+     -
+     - That is, the function unfold p h t produces the empty list if the predicate p
+     - is true of the argument, and otherwise produces a non-empty list by applying
+     - the function h to give the head, and the function t to generate another
+     - argument that is recursively processed in the same way to produce the tail of
+     - the list. For example, the function int2bin can be rewritten more compactly
+     - using unfold as follows:
+     -
+     - int2bin = unfold (== 0) (‘mod‘2) (‘div‘2)
+     -
+     - Redefine the functions chop8 , map f and iterate f using unfold .
+     -}
+
+    unfold p h t x
+      |p x = []
+      |otherwise = h x :unfold p h t (t x)
+    type Bits = Integer
+
+    chop8 :: [Bits] -> [[Bits]]
+    chop8 = unfold (== []) (take 8) (drop 8)
+
+    bits = [1,0,0,0,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0]
+
+    map'' :: (a -> b) -> [a] -> [b]
+    map'' f = unfold null (f.head) tail
+
+    operator7 = (+2)
+    test7 = map operator7 xs == map'' operator7 xs
+
+    iterate' :: (a -> a) -> a -> [a]
+    iterate' f = unfold (const False) id f
+
+    iterate71 = iterate (*2) 2
+    iterate'711 = iterate' (*2) 2
+    test71 = take 5 iterate71 == take 5 iterate'711
+
 ## Chapter 8 - Functional parsers
 ## Chapter 9 - Interactive programs
 ## Chapter 10 - Declaring types and classes
