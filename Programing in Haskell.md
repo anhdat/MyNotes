@@ -966,6 +966,106 @@ odd (n + 1) = even n
     test71 = take 5 iterate71 == take 5 iterate'711
 
 ## Chapter 8 - Functional parsers
+
+### 8.1. Parsers
+
+- Is a program takes a string of characters, and produces some form of tree that
+  makes the syntactic structure of the string explicit.
+- That means parser take a string as its input. Then produce an output as a tree form which expose the syntax of the string in a clear representation.
+- Parser is useful to reduce compute when it comes to the main program by pre-processing the input.
+
+### 8.2. The parser type
+
+- `type Parser = String -> Tree`
+- Parser may not consume entire the input string, so `type Parser = String -> (Tree, String)`
+- Parser may fail. We generalize our result type as a list of result. So empty list denotes failure, while singleton list denotes success: `type Parser -> [(Tree, String)]`
+- Then we can embed the type of different input into the type of the parser: `type Parser a = String -> [(a, String)]`
+
+### 8.3. Basic parsers
+
+- _return_: always succeeds, leave the input unchanged.
+    return :: a -> Parser a
+    return v = \inp -> [(v, inp)]
+
+- _failure_: always fails
+    failure :: Parser a
+    failure = \inp -> []
+
+- _item_: fails if input is empty, succeeds with the first character as the result.
+    item :: Parser Char
+    item = \inp case inp of
+                    [] -> []
+                    (x : xs) -> [(x, xs)]
+
+- _parse_: applies the parser to the input string.
+    parse :: Parser a -> String -> [(a, String)]
+    parse p inp = p inp
+
+### 8.4. Sequencing
+
+- >>=:
+    (>>=) :: Parser a -> (a -> Parser b) -> Parser b
+    p >>= f = \inp -> case parse p inp of
+                          [] -> []
+                          [(v, out)] -> parse (f v) out
+
+- _do_ combines a chain of _generators_
+
+### 8.5. Choice
+
+- +++: _or else_, receive two parsers, applies the first, if this fails to apply the second instead.
+    (+++) :: Parse a -> Parse a -> Parse a
+    p +++ q = \ inp -> case parse p inp of
+                           [] -> parse q inp
+                           [(v, out)] -> [(v, out)]
+
+### 8.6. Derived primitives
+
+- Note: without an introduction to Monad, the cod in book just won't work, use this instead. (Copied from http://stackoverflow.com/a/6666706/1924463)
+
+    import Data.Char
+    type Parser a = String -> [(a, String)]
+
+    parse :: Parser a -> String -> [(a, String)]
+    parse p inp = p inp
+
+    return' :: a -> Parser a
+    return' v = \ inp -> [(v, inp)]
+
+    failure :: Parser a
+    failure = \ inp -> []
+
+    item :: Parser Char
+    item = \ inp -> case inp of
+                     [] -> []
+                     (x : xs ) -> [(x , xs)]
+
+    (>>>=) :: Parser a -> (a -> Parser b) -> Parser b
+    p >>>= f = \inp -> case parse p inp of
+                        [] -> []
+                        [(v, out)] -> parse (f v) out
+
+    (+++) :: Parser a -> Parser a -> Parser a
+    p +++ q = \inp -> case parse p inp of
+                        [] -> parse q inp
+                        [(v, out)] -> [(v, out)]
+
+    sat :: (Char -> Bool) -> Parser Char
+    sat p = item >>>= (\ x -> if p x then return' x else failure)
+
+    _digit :: Parser Char
+    _digit = sat isDigit
+
+    many :: Parser a -> Parser[a]
+    many p = many1 p +++ return []
+    many1 :: Parser a -> Parser [a]
+    many1 p = p >>>= (\ v -> (many p) >>>= (\ vs -> return' (v : vs)))
+
+### 8.7. Handling spacing
+### 8.8. Arithmetic expressions
+### 8.9. Chapter remarks
+### 8.10. Exercises
+
 ## Chapter 9 - Interactive programs
 ## Chapter 10 - Declaring types and classes
 ## Chapter 11 - The countdown problem
