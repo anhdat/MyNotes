@@ -70,3 +70,21 @@ Critical thinking
 
 ## Communicate!
 None of our works in a vacuum.
+
+# Chapter 2: A Pragmatic Approach
+
+## The evils of duplication
+
+Every piece of knowlege have a single, unambiguous, authoritative representation within a system.
+
+- Tips 11: Don't repeat yourself
+
+It's not the question when will you rembember, it's the question when will you forget.
+
+The reasons could lead to duplication:
+    - Imposed duplication: developers have no choice to duplicate the knowledge. e.g. duplication between different languages, layers, documentation and code. Automative tools could help prevent this.
+    - Inadverted duplication: it's the duplication from the design. e.g. object properties which can be calculated from others should be a computed one. Thus principles like having a uniform way to access and modify properties through methods will prevent this, even when the requirements gets increased in size, for example, there's a need to cache the computation.
+    - Impation duplication: remind yourself that the time you're thinking that is saving now would cost you a ton later.
+    - Interdeveloper: share knowledge between people in team. Think about library-oriented development: write to reuse, clear in reuse module. `utils` model gets forgotten.
+
+- Tips 12: Make it easy to reuse
