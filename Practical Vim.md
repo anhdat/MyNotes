@@ -75,7 +75,7 @@ The dot command let us repeat the last change.
 **The change** is the command x, dd,
 
 > for example
-or everytime we dip into Insert mode until we return to Normal mode.
+or every time we dip into Insert mode until we return to Normal mode.
 
 **-> The Dot command is a mini macro**
 
@@ -94,9 +94,9 @@ Combine:
 
 ### Tip 3. Take One Step Back, Then Three Forward
 
-Try to find solution to utilize ; and . by using search and "change" notion.
-'f+' search for next appearance of '+'
-';' repeat that search
+Try to find solution to utilize `;` and `.` by using search and "change" notion.
+`f+` search for next appearance of `+`
+`;` repeat that search
 
 ### Tip 4. Act, Repeat, Reverse
 
@@ -188,11 +188,47 @@ gU          |Uppercase
 ## 3. Insert Mode
 
 ### Tip 13. Make Corrections Instantly from Insert Mode
+
+The touch typist can type by feel
+We can use some chords to correct our errors without leaving insert mode
+
+    <C-h> Delete 1 character to the left
+    <C-w> Delete 1 word to the left
+    <C-u> Delete to the begining
+
 ### Tip 14. Get Back to Normal Mode
+
+Switching mode should be natural. With keyboard binding, changing to normal mode by pressing <Esc>
+could be easy. We can also press <C-[>
+Insert Normal Mode could be interesting: when in Normal mode, pressing <C-o> brings you to Insert
+Normal Mode, which you can fire off a single command, after that we are brought back to Insert mode
+automatically.
+The auther have a pretty nice use of this: <C-o>zz will redraw the sreen makes the current editing
+line be center of the screen. Neat! Sadly Sublime Text's Vintageous doesn't support this. I should
+find and write a macro for this.
+
 ### Tip 15. Paste from a Register Without Leaving Insert Mode
+
+<C-r> will allow us to access editor's register. With a following number, it will type out the
+character from register. 0 is the last. Vintageous also don't support this.
+
+### Tip 16. Do Back-of-the-Envelope Calculation in Place
+
+Register in vim can also execute a vim script then return the value.
+<C-r>=8*2 in Insert mode will add 16 in current editing line.
+
 ### Tip 17. Insert Unusual Characters by Character Code.
+
+<C-v> following a 3-digit number or enclose it in a curly bracket.
+
 ### Tip 18. Insert Unusual Character by Digraph
+
+<C-k> allows us to enter some special character by typing some easy combination.
+Like ?I for ¿, in Mac, we can use the special character pop over also.
+
 ### Tip 19. Overwrite Existing Text with Replace Mode
+
+Enter Replace mode with `R`.
 
 ## 4. Visual Mode
 ## 5. Command-Line Mode
