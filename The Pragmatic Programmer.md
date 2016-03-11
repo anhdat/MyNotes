@@ -88,3 +88,52 @@ The reasons could lead to duplication:
     - Interdeveloper: share knowledge between people in team. Think about library-oriented development: write to reuse, clear in reuse module. `utils` model gets forgotten.
 
 - Tips 12: Make it easy to reuse
+
+## 8. Orthogonality
+
+Orthogonality: root from geometry, means that 2 lines that meet at a right angle. In vector it means independent. In software engineering, it means decoupling: changing one thing doesn't affect others.
+
+The system that isn't orthogonal: helicopter's control. (I learned this from GetSmarterEveryday chanel) -> Every control input has sencondary effects.
+
+- Tip 13: Eliminate effects between unrelated things
+
+Benefits when we do things orthogonaly:
+- Gain productivity: 
+    - Changes are localized: so tests and code should be small and easier to change
+    - Reuse components
+    - Flexible to combine
+- Reduce risk:
+    - Isolated
+    - Better tests
+
+Some places that we can improve by applying orthogonality to it:
+
+- Teams: based on project and people we have
+- Design: separate abstract parts of the whole system. The upper layer only use the abstractions provided by the lower ones.
+- Coding:
+    - Write shy code: modules that don't reavel anything unnecessary to others and don't rely on other's implementations
+    - Avoid global data
+
+## 9. Reversibility
+
+>Nothing is more dangerous than an idea if it's the only one you have.
+> Emily Auguste Chartier
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
