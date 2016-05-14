@@ -159,7 +159,9 @@ Some places that we can improve by applying orthogonality to it:
 > Nothing is more dangerous than an idea if it's the only one you have.
 > Emily Auguste Chartier
 
-
+Note: All the notes from section 10 to 13 was missing due to a hard drive problem when I got my
+laptop battery change. The problem "Cat ate my source code" happens to me faster than I thought. All
+of my project now in syncing to Dropbox daily.
 
 
 
