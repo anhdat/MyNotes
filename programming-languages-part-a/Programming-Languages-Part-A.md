@@ -69,3 +69,15 @@ Part C:
 - Class-based subtyping
 - Subtyping
 - Subtyping vs. parametric polymorphism; bounded polymorphism
+
+## Week 1
+
+To-Do list:
+
+- [x] Watch video on: motivation, assume background, logistics
+- [x] Read course policies
+- [x] Install software
+- [x] Play with Homework 0
+- [ ] Proceed to Section 1
+
+
