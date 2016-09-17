@@ -78,6 +78,99 @@ To-Do list:
 - [x] Read course policies
 - [x] Install software
 - [x] Play with Homework 0
-- [ ] Proceed to Section 1
+- [x] Proceed to Section 1
 
 
+## Week 2
+
+### ML Expression and Variable Binding
+
+- ML program = sequence of *bindings*
+
+```
+binding
+   |
+   v
+type check <- static environment: types of preceding bindings ~ *context*
+   |
+   v
+evaluate <- dynamic environment: values of preceding bindings ~ *environment*
+```
+
+- Always ask:
+    - Syntax: how it be written
+    - Type-check rules: how to determine the type from current static environment
+    - Evaluation rules: how to determine the value from current dynamic environment
+
+- e.g.:
+    - Integer contants: sequence of digit. always has type of `int`. is a value (Evaluated to itself)
+    - Boolean contants: either `true` or `false`. always has type of `bool`. is a value.
+    - Variables: sequence of letters/underscores... type: look up variable in context.
+    value: look up value of variable in environment.
+    - Addition: `e1 + e2`. type `int` if both `e1` and `e2` are int. sum of `v1` (value of `e1`) and v2.
+    - Conditionals: `if e1 then e2 else e3`. type: bool if e1: bool and e2 same type with e3.
+    - Less-than comparison: `e1 > e2`. type: bool if e1 and e2 both are `int`
+
+### Using `use`
+
+`use "foo.sml";`
+
+### Variables are immutable
+
+- bindings are immutable
+- no assigment statement
+- instead, it creates a *different environment* which *shadows* the earlier one
+
+### Function bindings
+
+Example:
+
+```sml
+
+fun pow (x:int, y:int) = (* correct only for y >= 0 *)
+    if y=0
+    then 1
+    else x * pow(x,y-1)
+```
+
+Should do the very same like other bindings:
+
+Syntax:
+
+`fun func_name (x1: t1, ..., xn: tn) = e`
+
+Type checking:
+
+- Type check body: in static environment, map x1 -> t1 ... xn -> tn and x0 to x1 * ... * xn -> t
+
+
+### Pairs and other tuples
+### List
+
+Why pure functional languages like ML and Haskell can have tail recursion while C, Python don't?
+ML may be language has the worst error messages ever.
+
+### Let Expressions
+
+This creates local scope for variables and functions
+
+### Options
+
+Cool, this is the same in Swift.
+
+### Some other expresstions and operator
+### Lack of mutation and Benefits Thereof
+### The Pieces of Programming Languages
+
+Professor Grossman seems to have a big hate to Java. Always 'some language', 'real pain'.
+
+Pieces:
+
+- Syntax
+- Semantics
+- Idioms
+- Libraries
+- Tools
+
+Must to remember this course will only focus on Semantics and Idioms. The others can be learnt
+through working with the language (Syntax) and should be language agnostic (Libraries, Tools)
