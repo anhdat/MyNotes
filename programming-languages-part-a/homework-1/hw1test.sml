@@ -15,6 +15,12 @@ val test2 = number_in_month ([(2012,2,28),(2013,12,1)],2) = 1
 val test2_2 = number_in_month ([(2012,3,28),(2013,12,1)],2) = 0
 
 val test3 = number_in_months ([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[2,3,4]) = 3
+val test3_challenge = number_in_months_challenge([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[2,2,3,4]) = 3
+val test_dup = remove_dup_num(2, [2,2,3,4]) = [3, 4]
+val test_dup_v = remove_dup_num(2, [2,2,3,4])
+(*val test_dups = remove_duplicates([2,2,3,3,4]) = [3, 4, 2]*)
+val test_dups_v = remove_duplicates([2,2,3,3,4])
+
 val test4 = dates_in_month ([(2012,2,28),(2013,12,1)],2) = [(2012,2,28)]
 val test5 = dates_in_months ([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[2,3,4]) = [(2012,2,28),(2011,3,31),(2011,4,28)]
 val test6 = get_nth (["hi", "there", "how", "are", "you"], 2) = "there"
@@ -31,15 +37,19 @@ val test11_1 = oldest([(2012,2,28),(2011,3,31),(2011,4,28)])
 val test11_2 = oldest([]) = NONE
 val test11_3 = oldest([(2012,3,31),(2011,4,28),(2012,2,28)]) = SOME (2011,4,28)
 val test11_3_a = oldest([(2012,3,31),(2011,4,28),(2012,2,28)])
-(*
 
+val test_leap_year = is_leap_year(2016) = true
+val test_leap_year_1 = is_leap_year(2000) = true
+val test_leap_year_2 = is_leap_year(2500) = false
 
+val test_num_days_of_month = num_days_of_month(2, 2000) = 29
+val test_num_days_of_month_1 = num_days_of_month(3, 2000) = 31
+val test_num_days_of_month_1_v = num_days_of_month(3, 2000)
+val test_num_days_of_month_2 = num_days_of_month(2, 2001) = 28
+val test_num_days_of_month_3 = num_days_of_month(3, 2012) = 31
 
-
-
-
-
-
-
-
-*)
+val test_13_1 = reasonable_date(2012,3,31) = true
+val test_13_2 = reasonable_date(2012,3,32) = false
+val test_13_3 = reasonable_date(2012,13,31) = false
+val test_13_4 = reasonable_date(2001,2,29) = false
+val test_13_5 = reasonable_date(2000,2,29) = true

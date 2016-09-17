@@ -31,6 +31,7 @@ fun is_older(a: (int*int*int), b: (int*int*int)) =
                        day_a < day_b
     end
 
+
 (*
 2. Write a function number_in_month that takes a list of dates and a month (i.e., an int)
 and returns how many dates in the list are in the given month
@@ -47,6 +48,7 @@ fun number_in_month(dates: (int*int*int) list, month: int) =
             num_date_in_current_month + number_in_month(tl dates, month)
         end
 
+
 (*
 3. Write a function number_in_months that takes a list of dates and a list of months
 (i.e., an int list) and returns the number of dates in the list of dates
@@ -59,6 +61,8 @@ fun number_in_months(dates: (int * int * int) list, months: int list) =
     if null months then 0
     else
         number_in_month(dates, hd months) + number_in_months(dates, tl months)
+
+
 
 (*
 
@@ -82,6 +86,7 @@ fun dates_in_month(dates: (int*int*int) list, month: int) =
                 dates_in_month(tl dates, month)
         end
 
+
 (*
 5. Write a function dates_in_months that takes a list of dates and a list of months
 (i.e., an int list) and returns a list holding the dates from the argument list of dates
@@ -96,6 +101,7 @@ fun dates_in_months(dates: (int*int*int) list, months: int list) =
     else
         dates_in_month(dates, hd months) @ dates_in_months(dates, tl months)
 
+
 (*
 6. Write a function get_nth that takes a list of strings and an int n and
 returns the nth element of the list where the head of the list is 1st.
@@ -108,6 +114,7 @@ fun get_nth(strings: string list, index: int) =
     if index = 1 then hd strings
     else
         get_nth(tl strings, index - 1)
+
 
 (*
 7. Write a function date_to_string that takes a date and
@@ -135,6 +142,7 @@ fun date_to_string(date: int*int*int) =
     in
         month_name ^ " " ^ Int.toString(day) ^ ", " ^ Int.toString(year)
     end
+
 
 (*
 8. Write a function number_before_reaching_sum that takes
@@ -168,6 +176,7 @@ fun what_month(date_of_year: int) =
         number_before_reaching_sum(date_of_year, nums_dates_in_month) + 1
     end
 
+
 (*
 10. Write a function month_range that
 takes two days of the year day1 and day2 and
@@ -182,6 +191,7 @@ fun month_range(date_1: int, date_2: int) =
     if date_1 > date_2 then []
     else
         what_month(date_1) :: month_range(date_1 + 1, date_2)
+
 
 (*
 11. Write a function oldest that
@@ -210,3 +220,99 @@ fun oldest(dates: (int*int*int) list) =
         in
             SOME(oldest_nonempty dates)
     end
+
+
+(*
+12. Challenge Problem:
+Write functions number_in_months_challenge and dates_in_months_challenge
+that are like your solutions to problems 3 and 5
+except having a month in the second argument multiple times has no more effect than having it once.
+(Hint: Remove duplicates, then use previous work.)
+*)
+fun remove_dup_num(num: int, nums: int list) =
+    if null nums then []
+    else
+        if num = hd nums
+        then remove_dup_num(num, tl nums)
+        else hd nums :: remove_dup_num(num, tl nums)
+
+
+fun remove_duplicates(nums: int list) =
+    if null nums then []
+    else
+        let
+            val new_list = remove_dup_num(hd nums, nums)
+        in
+            hd nums :: remove_duplicates(new_list)
+        end
+
+
+fun number_in_months_challenge(dates: (int * int * int) list, months: int list) =
+    if null months then 0
+    else
+        let
+            val months = remove_duplicates(months)
+        in
+            number_in_months(dates, months)
+        end
+
+
+fun dates_in_months_challenge(dates: (int*int*int) list, months: int list) =
+    if null months then []
+    else
+        let
+            val months = remove_duplicates(months)
+        in
+            dates_in_months(dates, months)
+        end
+
+
+(*
+13. Challenge Problem:
+Write a function reasonable_date that takes a date
+and determines if it describes a real date in the common era.
+A “real date” has
+a positive year (year 0 did not exist),
+a month between 1 and 12,
+and a day appropriate for the month.
+Solutions should properly handle leap years.
+Leap years are years that are either
+divisible by 400 or
+divisible by 4 but not divisible by 100.
+(Do not worry about days possibly lost in the conversion to the Gregorian calendar
+in the Late 1500s.)
+*)
+val NUMS_DATES_IN_MONTH = [
+    31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+]
+
+
+fun is_leap_year(year: int) =
+    year mod 400 = 0 orelse (year mod 4 = 0 andalso year mod 100 <> 0)
+
+
+fun pick(index: int, nums: int list) =
+    if index = 0
+    then hd nums
+    else pick(index - 1, tl nums)
+
+
+fun num_days_of_month(month: int, year: int) =
+    if month = 2
+    then
+        if is_leap_year(year) then 29 else 28
+    else
+        pick(month + 1, NUMS_DATES_IN_MONTH)
+
+
+fun reasonable_date(date: int*int*int) =
+    let
+        val year = #1 date
+        val month = #2 date
+        val day = #3 date
+    in
+        year > 0 andalso
+        month < 12 andalso month > 1 andalso
+        day > 0 andalso day <= num_days_of_month(month, year)
+    end
+
