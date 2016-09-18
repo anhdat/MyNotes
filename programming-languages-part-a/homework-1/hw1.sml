@@ -312,7 +312,7 @@ fun reasonable_date(date: int*int*int) =
         val day = #3 date
     in
         year > 0 andalso
-        month < 12 andalso month > 1 andalso
+        month <= 12 andalso month >= 1 andalso
         day > 0 andalso day <= num_days_of_month(month, year)
     end
 
