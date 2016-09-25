@@ -75,3 +75,53 @@ datatype move = Discard of card | Draw
 exception IllegalMove
 
 (* put your solutions for problem 2 here *)
+
+
+(* 2a *)
+fun card_color(suit, rank) =
+    case suit of
+          Clubs    => Black
+        | Diamonds => Red
+        | Hearts   => Red
+        | Spades   => Black
+
+(* 2b *)
+fun card_value(suit, rank) =
+    case rank of
+          Ace   => 11
+        | Num n => n
+        | _     => 10
+
+(* 2c *)
+fun remove_card(cards, card, exc) =
+    case cards of
+          []    => raise exc
+        | x::xs =>
+            if x = card
+            then xs
+            else x :: remove_card(xs, card, exc)
+
+(* 2d *)
+fun all_same_color(cards) =
+    case cards of
+          []               => true
+        | card::[]         => true
+        | card::card_2::xs =>
+            if card_color card = card_color card_2
+            then all_same_color(card_2::xs)
+            else false
+
+(* 2e *)
+fun sum_cards(cards) =
+    let
+        fun sum_cards_helper(cards, acc) =
+            case cards of
+                  []    => acc
+                | x::xs => sum_cards_helper(xs, card_value(x) + acc)
+    in
+        sum_cards_helper(cards, 0)
+    end
+
+
+
+
