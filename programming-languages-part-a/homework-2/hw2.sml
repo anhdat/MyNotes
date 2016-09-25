@@ -123,5 +123,38 @@ fun sum_cards(cards) =
     end
 
 
+(* 2f *)
+fun score(cards, goal) =
+    case cards of
+          []    => goal
+        | x::xs =>
+            let
+                val sum = sum_cards(cards)
+                val preliminary_score = if sum >= goal then 3 * (sum - goal) else goal - sum
+            in
+                if all_same_color(cards) then preliminary_score div 2 else preliminary_score
+            end
 
-
+(* 2g *)
+fun officiate(cards, moves, goal) =
+    let
+        fun play(held_cards, cards, moves, goal)=
+            case moves of
+                  []    => score(held_cards, goal)
+                | m::ms =>
+                    case m of
+                          Discard c => play(remove_card(held_cards, c, IllegalMove), cards, ms, goal)
+                        | Draw      =>
+                            case cards of
+                                  []    => score(held_cards, goal)
+                                | c::cs =>
+                                    let
+                                        val new_held_cards = c::held_cards
+                                    in
+                                        if sum_cards(new_held_cards) >= goal
+                                        then score(new_held_cards, goal)
+                                        else play(new_held_cards, cs, ms, goal)
+                                    end
+    in
+        play([], cards, moves, goal)
+    end
