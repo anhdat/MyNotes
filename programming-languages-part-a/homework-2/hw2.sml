@@ -130,23 +130,22 @@ fun score(cards, goal) =
 (* 2g *)
 fun officiate(cards, moves, goal) =
     let
-        fun play(held_cards, cards, moves, goal)=
+        fun play(held_cards, cards, moves)=
             case moves of
-                  []    => score(held_cards, goal)
-                | m::ms =>
-                    case m of
-                          Discard c => play(remove_card(held_cards, c, IllegalMove), cards, ms, goal)
-                        | Draw      =>
-                            case cards of
-                                  []    => score(held_cards, goal)
-                                | c::cs =>
-                                    let
-                                        val new_held_cards = c::held_cards
-                                    in
-                                        if sum_cards(new_held_cards) >= goal
-                                        then score(new_held_cards, goal)
-                                        else play(new_held_cards, cs, ms, goal)
-                                    end
+                  [] => score(held_cards, goal)
+                | (Discard c)::ms =>
+                    play(remove_card(held_cards, c, IllegalMove), cards, ms)
+                | Draw::ms =>
+                    case cards of
+                          []    => score(held_cards, goal)
+                        | c::cs =>
+                            let
+                                val new_held_cards = c::held_cards
+                            in
+                                if sum_cards(new_held_cards) >= goal
+                                then score(new_held_cards, goal)
+                                else play(new_held_cards, cs, ms)
+                            end
     in
-        play([], cards, moves, goal)
+        play([], cards, moves)
     end
