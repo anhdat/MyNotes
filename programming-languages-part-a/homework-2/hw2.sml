@@ -46,11 +46,11 @@ fun get_substitutions2(substitutions, str) =
 (* 1d *)
 fun similar_names (substitutions, {first=first_name, last=last_name, middle=middle_name})=
     let
-        fun get_names (subs, {first=first_name, last=last_name, middle=middle_name}) =
+        fun get_names (subs, first_name) =
             case subs of
                   []    => []
                 | x::xs =>
-                    {first=x, last=last_name, middle=middle_name} :: get_names(xs, {first=first_name, last=last_name, middle=middle_name})
+                    {first=x, last=last_name, middle=middle_name} :: get_names(xs, first_name)
 
     in
         case substitutions of
@@ -58,7 +58,7 @@ fun similar_names (substitutions, {first=first_name, last=last_name, middle=midd
             | x::xs =>
                 case get_substitutions1(substitutions, first_name) of
                       []    => []
-                    | y::ys => {first=first_name, last=last_name, middle=middle_name} :: get_names(y::ys, {first=first_name, last=last_name, middle=middle_name})
+                    | y::ys => {first=first_name, last=last_name, middle=middle_name} :: get_names(y::ys, first_name)
     end
 
 
