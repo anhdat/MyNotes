@@ -46,19 +46,14 @@ fun get_substitutions2(substitutions, str) =
 (* 1d *)
 fun similar_names (substitutions, {first=first_name, last=last_name, middle=middle_name})=
     let
-        fun get_names (subs, first_name) =
+        fun get_names (subs) =
             case subs of
                   []    => []
                 | x::xs =>
-                    {first=x, last=last_name, middle=middle_name} :: get_names(xs, first_name)
+                    {first=x, last=last_name, middle=middle_name} :: get_names(xs)
 
     in
-        case substitutions of
-              []    => []
-            | x::xs =>
-                case get_substitutions1(substitutions, first_name) of
-                      []    => []
-                    | y::ys => {first=first_name, last=last_name, middle=middle_name} :: get_names(y::ys, first_name)
+        {first=first_name, last=last_name, middle=middle_name} :: get_names(get_substitutions1(substitutions, first_name))
     end
 
 
@@ -125,15 +120,12 @@ fun sum_cards(cards) =
 
 (* 2f *)
 fun score(cards, goal) =
-    case cards of
-          []    => goal
-        | x::xs =>
-            let
-                val sum = sum_cards(cards)
-                val preliminary_score = if sum >= goal then 3 * (sum - goal) else goal - sum
-            in
-                if all_same_color(cards) then preliminary_score div 2 else preliminary_score
-            end
+    let
+        val sum = sum_cards(cards)
+        val preliminary_score = if sum >= goal then 3 * (sum - goal) else goal - sum
+    in
+        if all_same_color(cards) then preliminary_score div 2 else preliminary_score
+    end
 
 (* 2g *)
 fun officiate(cards, moves, goal) =
